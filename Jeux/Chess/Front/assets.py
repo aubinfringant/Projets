@@ -5,14 +5,14 @@ def load_assets():
     TAILLE_CARTE = (100, 150)
     import pygame
     pygame.init()
-    pygame.display.set_mode((700,700))
+    pygame.display.set_mode((700,700), pygame.SCALED)
     def img(nom, size=None):
         i = pygame.image.load(BASE + nom).convert_alpha()
         return pygame.transform.scale(i, size) if size else i
 
-    # ---------- Cartes ----------
-    valeurs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"]
-    valeur = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"]
+    
+    rank = ["R", "D", "F", "C", "T", "P"]
+    color = ["n", "b"]
     couleurs = {
         "co": "Hearts",
         "p": "Spades",
