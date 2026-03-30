@@ -2,14 +2,14 @@ Bienvenue dans ma collection de jeux de cartes ! Ce `README.md` explique les rê
 
 ---
 
-**Contenu :**
+**Contenu :
 
-  ** I. Liste des jeux disponibles.**
-  ** II. Règles.**
-  ** III. Fonctionnement.**
-  ** IV. Explication du code**
-  ** V. Instalation et démarage**
-  ** VI. Crédits**
+I. Liste des jeux disponibles.
+II. Règles.
+III. Fonctionnement.
+IV. Explication du code
+V. Instalation et démarage
+VI. Crédits**
 
 ---
 
