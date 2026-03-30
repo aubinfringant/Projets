@@ -2,14 +2,14 @@ Bienvenue dans ma collection de jeux de cartes ! Ce `README.md` explique les rê
 
 ---
 
-**Contenu :
+**Contenu**
 
-I. Liste des jeux disponibles.
-II. Règles.
-III. Fonctionnement.
-IV. Explication du code
-V. Instalation et démarage
-VI. Crédits**
+**I. Liste des jeux disponibles.  
+II. Règles.  
+III. Fonctionnement.  
+IV. Explication du code.  
+V. Instalation et démarage.  
+VI. Crédits.**
 
 ---
 
@@ -53,10 +53,8 @@ VI. Crédits**
     * Chaque joueur joue une carte en même temps.
     * Le joueur avec la carte la plus forte remporte le pli.
     * En cas d’égalité, une « bataille » est déclenchée avec plusieurs cartes en jeu.
-    * Le jeu continue jusqu’à ce qu’un joueur récupère toutes les cartes.
-      
-
-
+    * Le jeu continue jusqu’à ce qu’un joueur récupère toutes les cartes.  
+  
   2. **Memory.**
      
   * **Règles principales** :
@@ -65,9 +63,8 @@ VI. Crédits**
     * Le joueur retourne deux cartes à chaque tour
     * Si les cartes sont identiques, elles restent visibles
     * Sinon, elles sont retournées face cachée
-    * Le jeu se termine lorsque toutes les paires sont trouvées
-
-
+    * Le jeu se termine lorsque toutes les paires sont trouvées  
+  
   3. **Uno.**
      
   * **Règles principales** :
@@ -103,7 +100,7 @@ VI. Crédits**
   3. **Uno.**
 
   - `uno.py` gère toute la logique principale (tour par tour, joueur humain + IA)
-  - `DeckUno.py` crée les cartes UNO et mélange le deck
+  - `DeckUno.py` crée les cartes du Uno et mélange le deck
   - `Engine.py` contient les règles du jeu (cartes jouables, effets, distribution)
   - `display.py` gère l’affichage avec pygame (cartes, main du joueur, clics)
   - Les autres joueurs sont contrôlés automatiquement (IA simple)
