@@ -1,6 +1,6 @@
-from Library.Jeux.Uno.Front.display import *
-from Library.Jeux.Uno.Class.DeckUno import *
-from Library.Jeux.Uno.Back.Engine import *
+from Front.display import *
+from Class.DeckUno import *
+from Back.Engine import *
 
 def init():
     deck = DeckUno()
