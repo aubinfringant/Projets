@@ -1,7 +1,7 @@
-from Library.Jeux.Bataille.Front.display import *
-from Library.Class.Deck_52 import *
-from Library.Class.Player import *
-from Library.Class.Pli import *
+from Front.display import *
+from Class.Deck_52 import *
+from Class.Player import *
+from Class.Pli import *
 import random
 
 deck = Deck()

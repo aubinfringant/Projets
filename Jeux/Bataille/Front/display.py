@@ -1,4 +1,4 @@
-from Library.Jeux.Bataille.Front.assets import load_assets
+from Front.assets import load_assets
 import pygame
 def main_menu():
     deck_png, carte_dos, dico_de_cartes, tapis = load_assets()
