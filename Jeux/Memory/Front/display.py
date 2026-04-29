@@ -1,5 +1,8 @@
-from Library.Jeux.Memory.Front.assets import load_assets
-from Library.Jeux.Memory.Class.Grid import *
+import sys
+sys.path.append('c:\\Users\\aubin\\OneDrive\\Documents\\GitHub\\Projets')
+
+from .assets import load_assets
+from Class.Grid import *
 from copy import deepcopy
 import pygame
 

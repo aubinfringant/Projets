@@ -1,3 +1,6 @@
+import sys
+sys.path.append('c:\\Users\\aubin\\OneDrive\\Documents\\GitHub\\Projets')
+
 from Front.display import *
 from Class.Deck_52 import *
 from Class.Player import *

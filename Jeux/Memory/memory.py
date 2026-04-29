@@ -1,6 +1,6 @@
 import time
-from Library.Jeux.Memory.Class.Grid import *
-from Library.Jeux.Memory.Front.display import *
+from Class.Grid import *
+from Front.display import *
 
 
 grille = Grid(4,4)

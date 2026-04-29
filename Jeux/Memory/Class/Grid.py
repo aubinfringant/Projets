@@ -1,4 +1,7 @@
-from Library.Class.Deck_52 import *
+import sys
+sys.path.append('c:\\Users\\aubin\\OneDrive\\Documents\\GitHub\\Projets')
+
+from Class.Deck_52 import *
 import random
 
 class Grid:
