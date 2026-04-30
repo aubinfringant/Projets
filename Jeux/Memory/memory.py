@@ -1,5 +1,5 @@
-from Library.Jeux.Memory.Front.display import *
-from Library.Class.Grid import *
+from Jeux.Memory.Front.display import *
+from Class.GridMemory import *
 
 run = main_menu()
 

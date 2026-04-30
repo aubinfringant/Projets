@@ -1,7 +1,7 @@
-from Library.Jeux.Bataille.Front.display import *
-from Library.Class.Deck_52 import *
-from Library.Class.Player import *
-from Library.Class.Trick import *
+from Jeux.Bataille.Front.display import *
+from Class.Deck52 import *
+from Class.Player import *
+from Class.Trick import *
 import random
 
 def play_turn(): #-> Boolean

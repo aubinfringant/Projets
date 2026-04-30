@@ -1,17 +1,10 @@
 import random
-class Card:
-
-    def __init__(self, value, color=None):
-        self.card = (value, color)
-        self.value = value
-        self.color = color
-
-    def __str__(self):
-        return str(self.card)
+from Class.Card import Card
 
 class DeckUno:
     def __str__(self):
         return str(self.deck)
+
     def __init__(self):
         self.values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "Turn", "Pass", "Draw"]
         self.colors = ["Green", "Blue", "Red", "Yellow"]

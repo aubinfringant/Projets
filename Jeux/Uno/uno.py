@@ -1,5 +1,5 @@
-from Library.Class.DeckUno import *
-from Library.Jeux.Uno.Back.engine import *
+from Class.DeckUno import *
+from Jeux.Uno.Back.engine import *
 
 launch = main_menu()
 

@@ -1,4 +1,4 @@
-from Library.Jeux.Puissance4.Front.assets import *
+from Jeux.Puissance4.Front.assets import *
 import pygame
 
 def main_menu():

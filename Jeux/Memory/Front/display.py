@@ -1,4 +1,4 @@
-from Library.Jeux.Memory.Front.assets import load_assets
+from Jeux.Memory.Front.assets import load_assets
 import pygame
 
 def main_menu(): #-> Boolean

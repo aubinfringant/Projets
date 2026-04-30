@@ -1,4 +1,4 @@
-from Library.Class.Deck_52 import *
+from Class.Deck52 import *
 import random
 
 class Grid:
@@ -8,7 +8,7 @@ class Grid:
             self.grid = [[0 for i in range(width)] for j in range(height)]
             self.binary_grid = [[0 for i in range(width)] for j in range(height)]
         else:
-            print("mauvaise taille")
+            print("Mauvaise taille (Nombre paire seulement).")
 
     def full(self):
         for line in self.binary_grid:
@@ -17,7 +17,7 @@ class Grid:
                     return False
         return True
 
-    def draw(self):
+    def print_r(self):
         for i in range(len(self.grid)):
             for j in range(len(self.grid[0])):
                 print(self.grid[i][j].card)

@@ -1,8 +1,9 @@
-from Library.Jeux.Uno.Front.display import *
+from Jeux.Uno.Front.display import *
 import random
 
 def playing(deck, players, top, direction, counter, players_turn):
     while True:
+        print(len(players[1]))
         deck = joker_reset(deck)
         players[0] = deck.sort(players[0])
         hand = players[players_turn % 4]
@@ -54,12 +55,12 @@ def bot_turn(deck, players, hand, next_hand,
                         card.color = hand[0].color
                         card.card = (card.value, card.color)
 
-                top = get_top(hand, hand.index(card), deck)
+                top, hand = get_top(hand, hand.index(card), deck)
                 choosing = False
                 break
 
         hand.extend(deck.draw(1))
-        running, _ = display(players, deck, top, direction)
+        running = display_game(players, deck, top, direction)
         pygame.time.wait(150)
 
         for event in pygame.event.get():
@@ -72,12 +73,13 @@ def bot_turn(deck, players, hand, next_hand,
 
     direction, players_turn, counter, next_hand = card_effects(top, direction, players_turn,
                                                                counter, next_hand, deck)
-    running = display(players, deck, top, direction)
+    running = display_game(players, deck, top, direction)
 
     if not running:
         return (False,) * 8
 
     pygame.time.wait(1200)
+    print(len(players[1]))
 
     return deck,players,hand,next_hand,direction, players_turn,counter,top
 
@@ -109,11 +111,11 @@ def player_turn(deck, players, hand, next_hand,
                 card.color = color
                 card.card = (card.value, color)
 
-                top = get_top(hand, choice, deck)
+                top, hand = get_top(hand, choice, deck)
                 break
 
             elif playable(card, top):
-                top = get_top(hand, choice, deck)
+                top, hand = get_top(hand, choice, deck)
                 break
 
     if not running:
@@ -121,7 +123,7 @@ def player_turn(deck, players, hand, next_hand,
 
     direction, players_turn, counter, next_hand = card_effects(top, direction, players_turn,
                                                                counter, next_hand, deck)
-    running = display(players, deck, top, direction)
+    running = display_game(players, deck, top, direction)
 
     if not running:
         return (False,) * 8
@@ -186,7 +188,7 @@ def have_draw(hand, card, top, deck, counter):
 def get_top(hand, choice, deck):
     top = hand.pop(choice)
     deck.deck.insert(0, top)
-    return top
+    return top, hand
 
 def card_effects(top, direction, players_turn, counter, next_hand, deck):
 

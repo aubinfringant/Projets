@@ -1,5 +1,5 @@
-from Library.Jeux.Puissance4.Back.engine import *
-from Library.Jeux.Puissance4.Front.display import *
+from Jeux.Puissance4.Back.engine import *
+from Jeux.Puissance4.Front.display import *
 
 launch=fondu()
 
