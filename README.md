@@ -5,11 +5,8 @@ Bienvenue dans ma collection de jeux (Cartes, Minis Jeux et Casino)! Ce `README.
 **Contenu**
 
 **I. Liste des jeux disponibles.  
-II. Règles.  
-III. Fonctionnement.  
-IV. Explication du code.  
-V. Instalation et démarage.  
-VI. Crédits.**
+II. Instalation et démarage.  
+III. Crédits.**
 
 ---
 
@@ -30,6 +27,27 @@ VI. Crédits.**
 
 
   3. **Uno.**
+
+    - Nombre de joueurs : 1 joueur + 3 Ordinateur
+  
+    - Objectif : Être le premier à ne plus avoir de cartes
+
+    
+  4. **Uno.**
+
+    - Nombre de joueurs : 1 joueur + 3 Ordinateur
+  
+    - Objectif : Être le premier à ne plus avoir de cartes
+
+    
+  5. **Uno.**
+
+    - Nombre de joueurs : 1 joueur + 3 Ordinateur
+  
+    - Objectif : Être le premier à ne plus avoir de cartes
+
+    
+  6. **Uno.**
 
     - Nombre de joueurs : 1 joueur + 3 Ordinateur
   
