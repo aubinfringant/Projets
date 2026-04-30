@@ -3,7 +3,6 @@ import random
 
 def playing(deck, players, top, direction, counter, players_turn):
     while True:
-        print(len(players[1]))
         deck = joker_reset(deck)
         players[0] = deck.sort(players[0])
         hand = players[players_turn % 4]
@@ -55,13 +54,14 @@ def bot_turn(deck, players, hand, next_hand,
                         card.color = hand[0].color
                         card.card = (card.value, card.color)
 
-                top, hand = get_top(hand, hand.index(card), deck)
+                top = get_top(hand, hand.index(card), deck)
                 choosing = False
                 break
 
-        hand.extend(deck.draw(1))
-        running = display_game(players, deck, top, direction)
-        pygame.time.wait(150)
+        if choosing:
+            hand.extend(deck.draw(1))
+            running = display_game(players, deck, top, direction)
+            pygame.time.wait(150)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -79,7 +79,6 @@ def bot_turn(deck, players, hand, next_hand,
         return (False,) * 8
 
     pygame.time.wait(1200)
-    print(len(players[1]))
 
     return deck,players,hand,next_hand,direction, players_turn,counter,top
 
@@ -188,7 +187,7 @@ def have_draw(hand, card, top, deck, counter):
 def get_top(hand, choice, deck):
     top = hand.pop(choice)
     deck.deck.insert(0, top)
-    return top, hand
+    return top
 
 def card_effects(top, direction, players_turn, counter, next_hand, deck):
 
