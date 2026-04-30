@@ -1,4 +1,4 @@
-Bienvenue dans ma collection de jeux (Cartes, Minis Jeux et Casino)! Ce `README.md` explique les rêgles des différents jeux, leur fonctionnement et comment lancer les jeux.
+Bienvenue dans ma collection de jeux (Cartes, Minis Jeux et Casino)! Ce `README.md` resume les rêgles des différents jeux, leur fonctionnement et comment les lancer.
 
 ---
 
@@ -26,18 +26,18 @@ III. Crédits.**
     - Objectif : Retrouver toutes les paires de cartes
 
 
-  3. **Uno.**
+  3. **Puissance 4.**
 
-    - Nombre de joueurs : 1 joueur + 3 Ordinateur
+    - Nombre de joueurs : 1 ou 2 joueurs
   
-    - Objectif : Être le premier à ne plus avoir de cartes
+    - Objectif : Connecter 4 jetons de sa couleur avant l'adversaire
 
     
-  4. **Uno.**
+  4. **Snake.**
 
-    - Nombre de joueurs : 1 joueur + 3 Ordinateur
+    - Nombre de joueurs : 1 joueur
   
-    - Objectif : Être le premier à ne plus avoir de cartes
+    - Objectif : Manger le plus de pomme sans rentrer dans les murs ou se mordre la queue
 
     
   5. **Uno.**
@@ -46,12 +46,6 @@ III. Crédits.**
   
     - Objectif : Être le premier à ne plus avoir de cartes
 
-    
-  6. **Uno.**
-
-    - Nombre de joueurs : 1 joueur + 3 Ordinateur
-  
-    - Objectif : Être le premier à ne plus avoir de cartes
 
 ---
 
@@ -59,47 +53,38 @@ III. Crédits.**
   
   1. **Matériel nécessaire.**
   
-  * Un ordinateur (Windows, Mac ou Linux)
+  * Un ordinateur à jour
   * Une souris ou la pavé tactile (pour interagir avec les jeux)
 
-Pour faire fonctionner les jeux sur ton ordinateur :
-
   2. Installer Python et Pycharm
-  
-  * Télécharge Python depuis le site officiel : [https://www.python.org](https://www.python.org)
-  * Pendant l’installation, coche **"Add Python to PATH"**
-  * Vérifie l’installation avec :
-  
-    ```bash
-    python --version
-    ```
 
-  3. Installer pygame
-  
-  * Ouvre un terminal (cmd, PowerShell ou terminal Linux/Mac)
-  * Installe pygame avec :
-  
-    ```bash
-    pip install pygame
-    ```
+  * Python : Télécharge-le sur python.org. Lors de l'installation, coche bien "Add Python to PATH". 
+  * PyCharm : Télécharge et installe PyCharm Community Edition (gratuit) sur le site de JetBrains.
 
-  4. Télécharger le projet
-  
-  * Clone ou télécharge ton projet
-  
-    ```bash
-    git clone <ton-repo>
-    ```
-  * Ou décompresse l’archive si tu l’as en .zip
+  3. Récupérer la liste de jeu.
+
+  * Ouvre PyCharm. Sur l'écran d'accueil, clique sur le bouton "Get from VCS".
+  * Dans le champ URL, colle le lien de ce dépôt :
+```bash
+  https://github.com/aubinfringant/Projets
+  ```
+  * Choisis le dossier où tu veux enregistrer le projet sur ton PC et clique sur "Clone".
+
+
+  4. installer Pygame
+
+  * Ouvre l'onglet Terminal en bas de PyCharm.
+  * Tape la commande suivante et appuie sur Entrée :
+
+  ```bash 
+  pip install pygame
+  ```
 
   5. Lancer un jeu
-  
-  * Place-toi dans le dossier du jeu
-  * Lance le fichier principal :
-  
-    ```bash
-    python "NomDuJeu".py
-    ```
+
+  * Dans l'explorateur de fichiers à gauche (onglet Project), fais un clic droit sur le fichier du jeu que tu veux lancer (ex: Puissance4.py).
+
+  * Sélectionne en haut le bouton lecture "Run 'NomDuJeu'".
 
 ---
 
@@ -107,7 +92,7 @@ Comment utiliser
 
 1. Choisir un jeu
 2. Lire le readme associé
-3. Préparer le matériel
+3. Comprendre les rêgles
 5. Jouer et s'amuser !
 
 ---

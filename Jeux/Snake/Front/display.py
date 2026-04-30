@@ -1,4 +1,4 @@
-from Library.Jeux.Snake.Front.assets import *
+from Jeux.Snake.Front.assets import *
 import pygame
 
 def main_menu():

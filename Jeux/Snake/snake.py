@@ -1,8 +1,7 @@
-from Library.Jeux.Snake.Front.display import *
-from Library.Jeux.Snake.Class.Snake import *
+from Jeux.Snake.Front.display import *
+from Jeux.Snake.Class.Snake import *
 
 snake = Snake()
-print(snake)
 
 running = True
 while running:

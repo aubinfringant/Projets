@@ -1,4 +1,4 @@
-from Library.Jeux.Snake.Front.assets import *
+from Jeux.Snake.Front.assets import *
 class Snake:
 
 
@@ -15,7 +15,6 @@ class Snake:
         self.grille_cord = [[[i, j]
                             for i in colonnes]
                             for j in lignes]
-        print(self.grille_cord)
 
         a,b,self.heads, self.bodys, self.tails, self.turn_horaires, self.turn_antis = load_assets()
         self.head = [self.heads[3],self.grille_cord[5][5]]
@@ -26,6 +25,6 @@ class Snake:
     def __str__(self):
         return str(self.whole)
 
-    def move(self, direction, whole):
+    def move(self, direction):
         self.head = [self.heads[direction],self.head[1][0]-45]
 
