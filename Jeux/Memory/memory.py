@@ -1,23 +1,42 @@
-import time
-from Class.Grid import *
-from Front.display import *
+from Library.Jeux.Memory.Front.display import *
+from Library.Class.Grid import *
 
+run = main_menu()
 
-grille = Grid(4,4)
-grille.add_card()
-cartes_trouvees = []
-choix = []
-main_menu()
-stop = grille.full()
-while not stop:
-    for _ in range(2):
-        choix.append(choix_cartes(grille,cartes_trouvees,choix))
-    choix_cartes(grille, cartes_trouvees, choix)
-    if choix[0][0] == choix[1][0]:
-        grille.find_card(choix[0][0])
-        cartes_trouvees.append(choix[0][0])
-        choix = []
-    else:
-        choix = []
-    jeu(grille,cartes_trouvees)
-    stop = grille.full()
+while run:
+
+    grid = Grid(4,4)
+    grid.add_card()
+
+    found_cards = []
+    choices = []
+
+    play = run
+
+    while play:
+        for _ in range(2):
+            choice = card_choice(grid,found_cards,choices)
+            if choice:
+                choices.append(choice)
+            else:
+                run = False
+                break
+
+        if not choice:
+            run = False
+            break
+
+        run = card_choice(grid, found_cards, choices, pause=True)
+
+        if not run:
+            break
+
+        if choices[0][0] == choices[1][0]:
+            grid.find_card(choices[0][0])
+            found_cards.append(choices[0][0])
+
+        choices = []
+
+        if grid.full():
+            run = main_menu()
+            break

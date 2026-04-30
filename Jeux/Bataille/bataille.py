@@ -1,32 +1,63 @@
-import sys
-sys.path.append('c:\\Users\\aubin\\OneDrive\\Documents\\GitHub\\Projets')
-
-from Front.display import *
-from Class.Deck_52 import *
-from Class.Player import *
-from Class.Pli import *
+from Library.Jeux.Bataille.Front.display import *
+from Library.Class.Deck_52 import *
+from Library.Class.Player import *
+from Library.Class.Trick import *
 import random
 
-deck = Deck()
-deck.new_deck()
-random.shuffle(deck.deck)
-Joueur_1 = Player("Joueur_1")
-Joueur_2 = Player("Joueur_2")
+def play_turn(): #-> Boolean
 
-deck.tirer(Joueur_1.hand,26)
-deck.tirer(Joueur_2.hand,26)
+    if len(Player_1.hand) > 1:
+        choice = display_choose(trick.cards, Player_1.hand, Player_2.hand)
 
-main_menu()
+    else:
+        choice = 0
+    if choice is None:
+        return False
+    Player_1.hand[0], Player_1.hand[choice] = Player_1.hand[choice], Player_1.hand[0]
+    trick.cards.append(Player_1.drop())
+    trick.cards.append(Player_2.drop())
+    return display_game(trick.cards, Player_1.hand, Player_2.hand)
 
-while len(Joueur_1.hand) > 0 and len(Joueur_2.hand) > 0:
-    pli = Pli()
 
-    pli.pli.append(Joueur_1.give_card())
-    pli.pli.append(Joueur_2.give_card())
 
-    jeu(pli.pli,Joueur_1.hand,Joueur_2.hand)
-    retour = pli.result(Joueur_1, Joueur_2)
+play = main_menu()
 
-    while retour:
-        jeu(pli.pli,Joueur_1.hand,Joueur_2.hand)
-        retour = pli.result(Joueur_1, Joueur_2)
+while play:
+
+    run = True
+
+    deck = Deck()
+    deck.new_deck()
+    random.shuffle(deck.deck)
+
+    trick = Trick()
+
+    Player_1 = Player("Joueur_1")
+    Player_2 = Player("Joueur_2")
+
+    deck.draw(Player_1.hand, 26)
+    deck.draw(Player_2.hand, 26)
+
+    while len(Player_1.hand) > 0 and len(Player_2.hand) > 0:
+
+        run = play_turn()
+        if not run:
+            break
+
+        while trick.result(Player_1, Player_2):
+            run = play_turn()
+            if not run:
+                break
+
+        if not run:
+            break
+
+    if run:
+        result = display_game_over(Player_1.hand, Player_2.hand)
+
+        if result:
+            play = main_menu()
+        else:
+            play = False
+    else:
+        break

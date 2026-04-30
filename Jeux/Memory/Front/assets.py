@@ -1,7 +1,6 @@
 import os
-def load_assets():
+def load_assets(): #->  list[tuple[tuple[str, str], Surface]] , Surface , dict[tuple[str, str] , Surface
     BASE = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
-    print(BASE)
     TAILLE_CARTE = (100, 150)
     import pygame
     pygame.init()

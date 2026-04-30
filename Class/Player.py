@@ -4,5 +4,5 @@ class Player:
         self.name = name
         self.hand = []
 
-    def give_card(self):
-        return self.hand.pop()
+    def drop(self):
+        return self.hand.pop(0)

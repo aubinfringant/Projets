@@ -3,9 +3,16 @@ import random
 class Card:
 
     def __init__(self, value, color):
+        self.values = {"1" : 14, "2" : 2, "3" : 3, "4" : 4,
+                       "5" : 5, "6" : 6, "7" : 7, "8" : 8,
+                       "9" : 9, "10" : 10, "11" : 11,
+                       "12" : 12, "13" : 13}
         self.card = (value, color)
         self.value = value
         self.color = color
+
+    def __str__(self):
+        return self.card
 
 class Deck:
 
@@ -19,6 +26,6 @@ class Deck:
             for value in self.values:
                 self.deck.append(Card(value, color))
 
-    def tirer(self,j,nb):
-        for _ in range(nb):
-            j.append(self.deck.pop())
+    def draw(self,player,number):
+        for num in range(number):
+            player.append(self.deck.pop())
