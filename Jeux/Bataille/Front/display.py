@@ -2,60 +2,6 @@ from Jeux.Bataille.Front.assets import load_assets
 import pygame
 import sys
 
-def main_menu():
-    """
-    Gére l'affichage du menu principale et du choix fait dedans
-    :return: Boolean
-    """
-    font = pygame.font.SysFont("timesnewroman", 70, True, True)
-    title = font.render("Bataille", True, (255, 255, 255))
-    title_ = font.render("Bataille", True, (200, 0, 0))
-
-    font = pygame.font.SysFont("calibri", 50, True)
-
-    while True:
-
-        mouse_cord_x, mouse_cord_y = pygame.mouse.get_pos()
-
-        if 22 < mouse_cord_x < 338 and 180 < mouse_cord_y < 220:
-            new_game_msg = font.render("Nouvelle partie", True, (50, 50, 50))
-        else:
-            new_game_msg = font.render("Nouvelle partie", True, (100, 100, 100))
-
-        if 22 < mouse_cord_x < 161 and 340 < mouse_cord_y < 380:
-            leave_msg = font.render("Quitter", True, (50, 50, 50))
-        else:
-            leave_msg = font.render("Quitter", True, (100, 100, 100))
-
-
-        screen.fill((50, 200, 50))
-        display_main_menu(new_game_msg, leave_msg, title, title_)
-
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button in (1, 3):
-                    if 22 < mouse_cord_x < 338 and 180 < mouse_cord_y < 220:
-                        return True
-
-                    elif 22 < mouse_cord_x < 161 and 340 < mouse_cord_y < 380:
-                        pygame.quit()
-                        sys.exit()
-
-def display_main_menu(new_game_msg = str, leave_msg = str, title = str, title_ = str):
-    """
-    Place les eléments sur l'écran.
-    """
-    screen.blit(new_game_msg, (20, 180))
-    screen.blit(leave_msg, (20, 340))
-    screen.blit(title, (37, 39))
-    screen.blit(title_, (40, 40))
-
 def display_num_of_card(p1 = str, p2 = str):
     """
     Place les eléments sur l'écran.
@@ -71,23 +17,36 @@ def display_num_of_card(p1 = str, p2 = str):
 def display_table(trick, p1, p2):
     """
     Placer le tapis et les cartes en bataille.
-    :return: list[object]
     """
     screen.blit(tapis, (0, 0))
     screen.blit(carte_dos, (100, 200))
     screen.blit(carte_dos, (500, 200))
-    deck_ingage = []
 
-    for i in range(len(trick)):
-        deck_ingage.append(cards_sprite[trick[i].card])
-
-    for i in range(0, len(deck_ingage), 2):
-        screen.blit(deck_ingage[i], (210, 200 + 25 * i))
-        screen.blit(deck_ingage[i + 1], (390, 200 + 25 * i))
+    for i in range(0, len(trick.cards), 2) :
+        screen.blit(cards_sprite[trick.cards[i].card], (210, 200 + 25 * i))
+        screen.blit(cards_sprite[trick.cards[i+1].card], (390, 200 + 25 * i))
 
     display_num_of_card(str(len(p1)), str(len(p2)))
 
-    return deck_ingage
+def player_turn(trick, p1, p2):
+    """
+    Swap les 2 cartes en fonction de la carte choisie
+    pour pouvoir donner la bonne avec .drop()
+    ou donne la derniere carte si une carte restante.
+    """
+
+    if len(p1.hand) > 1:
+        choice = display_choose(trick, p1.hand, p2.hand)
+
+    else:
+        choice = 0
+
+    p1.hand[0], p1.hand[choice] = p1.hand[choice], p1.hand[0]
+
+    trick.cards.append(p1.drop())
+    trick.cards.append(p2.drop())
+
+    display_table(trick, p1.hand, p2.hand)
 
 def display_choose(trick,p1,p2):
     """
@@ -98,12 +57,12 @@ def display_choose(trick,p1,p2):
     card2 = cards_sprite[p1[1].card]
 
     while True:
-        deck_ingage = display_table(trick, p1, p2)
+        display_table(trick, p1, p2)
+        size_trick = len(trick.cards)
+        screen.blit(cards_sprite[p2[0].card], (390, 200 + 25 * (size_trick + 1 // 2)))
 
-        if len(deck_ingage) == 0:
-            screen.blit(cards_sprite[p2[0].card], (390, 200 + 25 * (len(deck_ingage)//2)))
-        else:
-            screen.blit(cards_sprite[p2[0].card], (390, 200 + 25 * (len(deck_ingage)+1//2)))
+        if size_trick == 0:
+            screen.blit(cards_sprite[p2[0].card], (390, 200 + 25 * (size_trick // 2)))
 
         display_num_of_card(str(len(p1)), str(len(p2)))
 
@@ -138,14 +97,12 @@ def display_game_over(p1,p2):
 
     while True:
 
+        msg1 = font.render("GAME OVER", True, (200, 100, 100))
+        msg2 = font.render("Joueur 1 GAGNE !", True, (200, 100, 100))
+
         if len(p1) == 0:
             msg1 = font.render("GAME OVER", True, (200, 100, 100))
             msg2 = font.render("Joueur 2 GAGNE !", True, (200, 100, 100))
-
-        else:
-            msg1 = font.render("GAME OVER", True, (200, 100, 100))
-            msg2 = font.render("Joueur 1 GAGNE !", True, (200, 100, 100))
-
 
         screen.blit(msg1, (165, 50))
         screen.blit(msg2, (110, 380))

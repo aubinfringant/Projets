@@ -1,59 +1,41 @@
 from Jeux.Bataille.Front.display import *
+from Class.GameStart import *
 from Class.Deck52 import *
 from Class.Player import *
 from Class.Trick import *
-import random
 
-def player_turn():
-    """
-    Swap les 2 cartes en fonction de la carte choisie
-    pour pouvoir donner la bonne avec .drop()
-    ou donne la derniere carte si une carte restante.
+Display = GameStart("Bataille", (80, 150, 80),(700, 700))
 
-    :return: func()
-    """
-
-    if len(Player_1.hand) > 1:
-        choice = display_choose(trick.cards, Player_1.hand, Player_2.hand)
-
-    else:
-        choice = 0
-
-    Player_1.hand[0], Player_1.hand[choice] = Player_1.hand[choice], Player_1.hand[0]
-
-    trick.cards.append(Player_1.drop())
-    trick.cards.append(Player_2.drop())
-
-    return display_table(trick.cards, Player_1.hand, Player_2.hand)
-
-while main_menu():
+while Display.main_menu():
     """
     Initialisation du programme
     """
     deck = Deck()
     deck.new_deck()
-    random.shuffle(deck.deck)
+    deck.shuffle()
 
     trick = Trick()
 
-    Player_1 = Player("Joueur_1")
-    Player_2 = Player("Joueur_2")
+    p1 = Player("Joueur_1")
+    p2 = Player("Joueur_2")
 
-    deck.draw(Player_1.hand, 26)
-    deck.draw(Player_2.hand, 26)
+    deck.draw(p1.hand, 26)
+    deck.draw(p2.hand, 26)
 
-    while len(Player_1.hand) > 0 and len(Player_2.hand) > 0:
+    while len(p1.hand) > 0 and len(p2.hand) > 0:
         """
         Boucle principale
         """
-        player_turn()
+        player_turn(trick, p1, p2)
         pygame.display.flip()
         pygame.time.wait(250)
+        pygame.event.clear()
 
 
-        while trick.result(Player_1, Player_2):
-            player_turn()
+        while trick.result(p1, p2):
+            player_turn(trick, p1, p2)
             pygame.display.flip()
             pygame.time.wait(250)
+            pygame.event.clear()
 
-    display_game_over(Player_1.hand, Player_2.hand)
+    display_game_over(p1.hand, p2.hand)
