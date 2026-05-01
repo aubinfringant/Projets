@@ -17,4 +17,8 @@ class Player:
             print(hand[i])
 
     def drop(self):
+        """
+        Retire et retourne la première carte de la main.
+        :return: Objet Card
+        """
         return self.hand.pop(0)

@@ -11,25 +11,32 @@ class Grid:
             print("Mauvaise taille (Nombre paire seulement).")
 
     def full(self):
-        for line in self.binary_grid:
-            for i in range(len(line)):
-                if line[i] == 0:
-                    return False
+        """
+        Vérifie si toutes les paires ont été trouvées.
+        :return: Boolean - True si binary_grid est complètement rempli de 1, False sinon
+        """
+        for row in self.binary_grid:
+            if 1 not in row:
+                return False
         return True
 
-    def print_r(self):
-        for i in range(len(self.grid)):
-            for j in range(len(self.grid[0])):
-                print(self.grid[i][j].card)
-
-    def find_card(self, card):
-        for line in range(len(self.grid)):
-            for i in range(len(self.grid[line])):
-                if self.grid[line][i].card == card:
-                    self.binary_grid[line][i] = 1
-
+    def find_card(self, card_try):
+        """
+        Marque toutes les occurrences d'une carte comme trouvées.
+        Recherche dans grid et met à jour binary_grid à 1 pour chaque correspondance.
+        """
+        for i,row in enumerate(self.grid):
+            for j,card in enumerate(row):
+                if card.card == card_try:
+                    self.binary_grid[i][j] = 1
 
     def add_card(self):
+        """
+        Remplit la grille avec des paires de cartes mélangées.
+        Pioche des cartes uniques d'un deck standard,
+        les duplique pour créer des paires,
+        mélange et remplit la grille.
+        """
         bag = []
         deck = Deck()
         deck.new_deck()

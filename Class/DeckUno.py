@@ -20,10 +20,11 @@ class DeckUno:
 
         random.shuffle(self.deck)
 
-    def drop(self):
-        return self.deck.pop()
-
     def draw(self, n):
+        """
+        Tire n cartes du deck.
+        :return: Liste de n cartes (ou liste vide si n <= 0)
+        """
         drawer = []
         if n <= 0:
             return drawer
@@ -32,6 +33,13 @@ class DeckUno:
         return drawer
 
     def sort(self,hand):
+        """
+        Trie la main d'un joueur par couleur puis par valeur.
+        Ordre de couleur : Red < Blue < Green < Yellow < Jokers (None)
+        Pour une même couleur : les cartes spéciales avant les chiffres,
+        puis par ordre croissant.
+        :return: Liste de cartes triée
+        """
         for l in range(len(hand)):
             for i in range(len(hand) - 1):
                 card = hand[i].card

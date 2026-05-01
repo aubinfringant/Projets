@@ -27,15 +27,26 @@ class Snake:
                       [self.tails[3][0], (5, 8)]]
 
     def get_cord(self, segment):
-
+        """
+        Retourne les coordonnées en pixels d'un segment du serpent.
+        :return: Tuple (x, y) en pixels
+        """
         i, j = self.snake[segment][1]
         return self.grid_cord[i][j]
 
     def get_grid_cord(self, i, j):
+        """
+        Retourne les coordonnées en pixels pour un indice de grille.
+        :return: Tuple (x, y) en pixels
+        """
         return self.grid_cord[i][j]
 
     def turn(self, direction):
-
+        """
+        Ajoute une direction à la queue des directions.
+        Empêche les virages interdits (sens inverse ou répétition).
+        Limite à maximum 2 directions en queue (pour éviter les bugs de timing).
+        """
         last_input = self.direction[0]
         opposite_direction = (-last_input[0], -last_input[1])
 
@@ -44,19 +55,27 @@ class Snake:
 
 
     def get_img_idx(self):
-
+        """
+        Détermine l'index d'image correspondant à la direction actuelle.
+        :return: 0=haut, 1=droite, 2=bas, 3=gauche
+        """
         if self.direction[0] == (0, -1):
-            img_idx = 3  # left
+            img_idx = 3
         elif self.direction[0] == (0, 1):
-            img_idx = 1  # right
+            img_idx = 1
         elif self.direction[0] == (-1, 0):
-            img_idx = 0  # up
+            img_idx = 0
         elif self.direction[0] == (1, 0):
-            img_idx = 2  # down
+            img_idx = 2
 
         return img_idx
 
     def get_body_img(self):
+        """
+        Retourne l'image appropriée du corps lors d'un virage.
+        Détecte les changements de direction et retourne l'image du virage correspondant.
+        :return: Image pygame du segment de corps
+        """
 
         if self.old_direction == (0, 1) and self.direction[0] == (-1, 0):
             body_img = self.turn_antis[2]  # right up
@@ -81,6 +100,11 @@ class Snake:
         return body_img
 
     def get_tail_img_idx(self):
+        """
+        Détermine l'index d'image de la queue selon sa direction avec
+        l'avant dernier segment.
+        :return: 0=haut, 1=droite, 2=bas, 3=gauche
+        """
         tail_x, tail_y = self.snake[-1][1]
         prev_x, prev_y = self.snake[-2][1]
         tail_dir_x = prev_x - tail_x
@@ -98,6 +122,12 @@ class Snake:
         return tail_img_idx
 
     def move(self):
+        """
+        Bouge le serpent d'une case dans la direction actuelle.
+        Détecte les collisions (murs ou auto-collision) et gère la croissance.
+        Met à jour les images en fonction des virages.
+        :return: Boolean - True si mouvement réussi, False si collision
+        """
         head_x, head_y = self.snake[0][1]
         delta_x, delta_y = self.direction[0]
         new_head_index = (head_x + delta_x, head_y + delta_y)

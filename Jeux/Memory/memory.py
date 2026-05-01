@@ -7,13 +7,11 @@ while main_menu():
     """
     Initialisation du programme
     """
+    found_cards = []
     grid = Grid(4,4)
     grid.add_card()
 
-    found_cards = []
-    choices = []
-
-    while len(found_cards) != 8:
+    while not grid.full:
         """
         Boucle principale
         """
@@ -24,6 +22,7 @@ while main_menu():
 
         if choices[0][0] == choices[1][0]:
             found_cards.append(choices)
+            grid.find_card(found_cards[-1])
         else:
             confirmation(grid, found_cards, choices)
 

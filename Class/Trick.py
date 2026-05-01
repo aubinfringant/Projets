@@ -34,8 +34,8 @@ class Trick:
 
         else:
             if len(p1.hand) >= 2 and len(p2.hand) >= 2:
-                self.cards.append(p1.drop())
-                self.cards.append(p2.drop())
+                self.cards.append(p1.pop())
+                self.cards.append(p2.pop())
                 return True
 
             else:

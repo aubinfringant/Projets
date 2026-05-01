@@ -8,13 +8,23 @@ class Deck:
         self.deck = []
 
     def new_deck(self):
+        """
+        Génère les 52 cartes du deck standard.
+        Crée une carte pour chaque combinaison (valeur, couleur).
+        """
         for color in self.colors:
             for value in self.values:
                 self.deck.append(Card(value, color))
 
     def draw(self,player,number):
+        """
+        Distribue des cartes du deck vers la main d'un joueur.
+        """
         for num in range(number):
             player.append(self.deck.pop())
 
     def shuffle(self):
+        """
+        Mélange aléatoirement les cartes du deck.
+        """
         random.shuffle(self.deck)

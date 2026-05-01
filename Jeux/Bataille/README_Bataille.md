@@ -4,20 +4,20 @@
 ![Pygame](https://img.shields.io/badge/Pygame-2.x-green?logo=pygame&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-> Jeu de cartes **Bataille** en Python avec interface graphique pygame.  
+> Jeu de cartes **Bataille** en Python avec interface graphique pygame.
 > Le joueur affronte l'ordinateur avec la possibilité de **choisir quelle carte jouer** parmi ses deux prochaines.
 
 ---
 
 ## Table des matières
 
-- [Démarrer le programme](#-démarrer-le-programme)
-- [Comment jouer](#-comment-jouer)
-- [Structure du projet](#-structure-du-projet)
-- [Classes et méthodes](#-classes-et-méthodes)
-- [Fonctions d'affichage](#-fonctions-daffichage--displaypy)
-- [Boucle principale](#-boucle-principale--bataillepy)
-- [Assets](#-assets--assetspy)
+- [Démarrer le programme](#démarrer-le-programme)
+- [Comment jouer](#comment-jouer)
+- [Structure du projet](#structure-du-projet)
+- [Classes et méthodes](#classes-et-méthodes)
+- [Fonctions d'affichage](#fonctions-daffichage--displaypy)
+- [Boucle principale](#boucle-principale--bataillepy)
+- [Assets](#assets--assetspy)
 
 ---
 
@@ -30,7 +30,6 @@
 | Module | Utilisation |
 |--------|-------------|
 | `random` | Mélange des cartes et redistribution aléatoire des plis |
-| `os` | Construction des chemins vers les assets graphiques |
 
 **Bibliothèques à installer** :
 
@@ -68,7 +67,7 @@ python bataille.py
 ├── bataille.py                        # Point d'entrée, boucle principale
 └── Library/
     ├── Class/
-    │   ├── Deck_52.py                 # Classes Card et Deck
+    │   ├── Deck52.py                  # Classes Card et Deck
     │   ├── Player.py                  # Classe Player
     │   └── Trick.py                   # Classe Trick
     └── Jeux/Bataille/Front/
@@ -80,7 +79,7 @@ python bataille.py
 
 ## Classes et méthodes
 
-### `Card` : `Deck_52.py`
+### `Card` : `Deck52.py`
 
 Représente une carte du jeu.
 
@@ -93,7 +92,7 @@ Représente une carte du jeu.
 
 ---
 
-### `Deck` : `Deck_52.py`
+### `Deck` : `Deck52.py`
 
 Représente un jeu de 52 cartes.
 
@@ -102,6 +101,7 @@ Représente un jeu de 52 cartes.
 | `deck` | `list[Card]` | Liste de toutes les cartes |
 | `new_deck()` | `None` | Génère les 52 cartes (4 couleurs × 13 valeurs) |
 | `draw(player, number)` | `None` | Distribue `number` cartes vers la main d'un joueur |
+| `shuffle()` | `None` | Mélange le deck |
 
 **Couleurs disponibles :**
 
@@ -152,35 +152,34 @@ Représente le pli en cours (les cartes posées sur la table).
 | Fonction | Retour | Description |
 |----------|--------|-------------|
 | `main_menu()` | `bool` | Affiche le menu principal. `True` = nouvelle partie, `False` = quitter |
-| `display_choose(trick, p1, p2)` | `int \| None` | Affiche les 2 prochaines cartes du joueur et attend un clic. `0` ou `1` selon le choix, `None` si fermeture |
-| `display_game(trick, p1, p2)` | `bool` | Affiche l'état du jeu après un tour. `False` si fermeture |
-| `display_game_over(p1, p2)` | `bool` | Affiche l'écran de fin. `True` = rejouer, `False` = quitter |
+| `display_main_menu(new_game_msg, leave_msg, title, title_)` | `None` | Place les boutons du menu principal et le titre sur l'écran |
 | `display_num_of_card(p1, p2)` | `None` | Affiche le nombre de cartes restantes pour chaque joueur |
-| `display_title()` | `None` | Affiche le titre *Bataille* |
-| `display_main_menu(new_game_msg, leave_msg)` | `None` | Affiche les boutons du menu principal |
+| `display_table(trick, p1, p2)` | `list` | Affiche le plateau avec le tapis, les cartes en jeu et les mains |
+| `display_choose(trick, p1, p2)` | `int` | Affiche les 2 prochaines cartes du joueur et attend un clic. `0` ou `1` selon le choix |
+| `display_game_over(p1, p2)` | `bool` | Affiche l'écran de fin. `True` = rejouer, `False` = quitter |
 
 ---
 
 ## Boucle principale : `bataille.py`
 
-### `play_turn(trick, Player_1, Player_2)`
+### `player_turn()`
 
-Gère un tour complet :
+Gère un tour complet du joueur :
 
-1. Affiche les 2 prochaines cartes de `Player_1` via `display_choose()`
+1. Affiche les 2 prochaines cartes via `display_choose()`
 2. Swap la carte choisie en position `0`
 3. Chaque joueur pose sa carte sur le pli
-4. Affiche le résultat via `display_game()`
-5. Retourne `True` si la partie continue, `False` si fermeture
+4. Affiche le résultat via `display_table()`
+5. Retourne `True` si la partie continue
 
 ### Schéma de la boucle
 
 ```
 main_menu()
 └── while les deux joueurs ont des cartes
-    ├── play_turn()              ← le joueur choisit sa carte
+    ├── player_turn()                ← le joueur choisit sa carte
     └── while trick.result() == True (guerre)
-        └── play_turn()          ← le joueur choisit sa carte pour la guerre
+        └── player_turn()            ← le joueur choisit sa carte pour la guerre
 ```
 
 ---
