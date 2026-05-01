@@ -1,16 +1,15 @@
-from Jeux.Snake.Front.assets import *
+from Jeux.Snake.Front.assets import load_assets
 import pygame
+import sys
 
 def main_menu():
     fondu()
-    jouer,quitter = False,False
     font = pygame.font.SysFont("timesnewroman", 70, True, True)
     titre = font.render("SNAKE", True, (255, 255, 255))
     titre_ = font.render("SNAKE", True, (200, 0, 0))
     font = pygame.font.SysFont("calibri", 50, True)
 
-    choix = True
-    while choix:
+    while True:
         mouse_cord_x, mouse_cord_y = pygame.mouse.get_pos()
 
         screen.fill((200, 200, 200))
@@ -30,76 +29,68 @@ def main_menu():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                choix = False
-                return False
+                pygame.quit()
+                sys.exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button in (1, 3):
                     if 338 > mouse_cord_x > 22 and 220 > mouse_cord_y > 180:
-                        jouer = True
+                        return True
+
                     elif 161 > mouse_cord_x > 22 and 380 > mouse_cord_y > 340:
-                        quitter = True
+                        pygame.quit()
+                        sys.exit()
 
-        if jouer:
-            choix = False
-            return True
-        elif quitter:
-            choix = False
-            return False
-
-def intro(snake):
-    running = True
-    while running:
-        screen.fill((200, 200, 200))
-        screen.blit(grille, (30, 230))
-        affichage_snake(snake)
-        pygame.display.flip()
+def intro(snake, apple):
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-                return False
-            elif event.type in (pygame.MOUSEBUTTONDOWN,pygame.KEYDOWN):
-                if event.button in (1, 3):
-                    running = False
-                    return True
+                pygame.quit()
+                sys.exit()
 
-def start(snake):
+            elif event.type in (pygame.MOUSEBUTTONDOWN,pygame.KEYDOWN):
+                return
+
+        affichage_snake(snake, apple)
+
+def affichage_snake(snake, apple):
+
     screen.fill((200, 200, 200))
-    screen.blit(grille, (30, 230))
-    #affichage_apple(apple)
-    affichage_snake(snake)
+    screen.blit(grid, (30, 230))
+
+    for cord in apple.position:
+        screen.blit(apple_img, snake.get_grid_cord(cord[0],cord[1]))
+
+    for i in range(len(snake.snake)):
+        screen.blit(snake.snake[i][0], snake.get_cord(i))
+
     pygame.display.flip()
 
-def affichage_snake(snake):
-    screen.blit(snake.head[0], snake.head[1])
-    for i in range(len(snake.body)):
-        screen.blit(snake.body[i][0], snake.body[i][1])
-    screen.blit(snake.tail[0], snake.tail[1])
+def game_over(apple_eaten):
+    font = pygame.font.SysFont("calibri", 30, True)
 
-def game_over(gagnant,tableau):
-    running = True
-    screen.fill((200, 200, 200))
-    font = pygame.font.SysFont("calibri", 50, True)
-    end = font.render("GAME OVER", True, (150,0,0))
-    if gagnant == 1:
-        result = font.render("Le joueur 1 (rouge) l'emporte !", True, (150, 0, 0))
-        screen.blit(result,(160,85))
-    elif gagnant == 2 :
-        result = font.render("Le joueur 2 (jaune) l'emporte !", True, (150, 0, 0))
-        screen.blit(result, (160, 85))
+    if apple_eaten == 141:
+        msg = font.render("VOUS AVEZ GAGNEE !!!", True, (200, 0, 0))
     else:
-        result = font.render("C'est une égalité !", True, (150, 0, 0))
-        screen.blit(result, (215, 85))
+        msg = font.render(f"VOUS AVEZ PERDU. SCORE : {apple_eaten} ", True, (200, 0, 0))
 
-    while running:
-        screen.blit(end, (310, 40))
+    restart = font.render("Appuyer sur Espace pour Restart", True, (200, 0, 0))
+
+    screen.blit(msg, (107, 50))
+    screen.blit(restart, (97, 100))
+
+    while True:
+
         pygame.display.flip()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-                return False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                running = False
-                return True
+                pygame.quit()
+                sys.exit()
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    return True
 
 def affichage_main_menu(titre,titre_,nouvelle_partie,quitter):
     screen.blit(titre, (17, 19))
@@ -113,7 +104,7 @@ def fondu():
         screen.fill((i, i, i))
         pygame.display.flip()
 
-apple, grille, head, body,tail,turn_horaire, turn_anti = load_assets()
+apple_img, grid, head, body,tail,turn_horaire, turn_anti = load_assets()
 pygame.init()
 pygame.display.set_caption('Snake')
 clock = pygame.time.Clock()
