@@ -1,143 +1,144 @@
 from Jeux.Uno.Front.display import *
 import random
 
-def playing(deck, players, top, direction, counter, players_turn):
+def playing(deck, players, direction, counter, players_turn):
+    """
+    Boucle principale du jeu. Alterne entre les tours des joueurs et des bots jusqu'à un gagnant.
+    """
     while True:
-        deck = joker_reset(deck)
+        joker_reset(deck)
         players[0] = deck.sort(players[0])
         hand = players[players_turn % 4]
         next_hand = players[(players_turn + 1 * direction) % 4]
 
         if players_turn % 4 == 0:
-            deck,players,hand,next_hand,direction, players_turn,counter,top = (
-                player_turn(deck,players,hand,next_hand,direction, players_turn,counter,top))
+            players,next_hand,direction, players_turn,counter = (
+                player_turn(deck,players,next_hand,direction, players_turn,counter))
 
         else:
-            deck,players,hand,next_hand,direction, players_turn,counter,top = (
-                bot_turn(deck,players,hand,next_hand,direction, players_turn,counter,top))
-
-        if not deck:
-            return False
+            players,next_hand,direction, players_turn,counter = (
+                bot_turn(deck,players,next_hand,direction, players_turn,counter))
 
         for hand in players:
             if len(hand) == 0:
-                choix = game_over(players.index(hand)+1)
+                if game_over(players.index(hand)+1):
+                    return
 
-                if not choix:
-                    return False
-
-                else:
-                    return main_menu()
-
-def bot_turn(deck, players, hand, next_hand,
-             direction, players_turn, counter, top):
+def bot_turn(deck, players, next_hand,
+             direction, players_turn, counter):
+    """
+    Gère le tour d'un bot. Le bot choisit automatiquement la meilleure carte à jouer.
+    :return: Tuple - (players, next_hand, direction, players_turn, counter)
+    """
     choosing = True
-    running = True
     while choosing:
-
-        if top.value == "Draw" and counter != 0:
+        hand = players[players_turn % 4]
+        top = deck.deck[0]
+        put_draw = False
+        if counter != 0:
             for card in hand:
-                hand, top, deck, choosing = have_draw(hand, card, top, deck,
-                                                      counter)
-                if not choosing:
+                if card.value == "Draw":
+                    hand = put_on_top(hand, hand.index(card), deck)
+                    choosing = False
+                    break
+        else:
+            for card in hand:
+                if playable(card, top):
+                    if card.color is None:
+                        if hand[0].color is None:
+                            card.color = random.choice(deck.colors)
+                            card.card = (card.value, card.color)
+
+                        else:
+                            card.color = hand[0].color
+                            card.card = (card.value, card.color)
+
+                    hand = put_on_top(hand, hand.index(card), deck)
+                    choosing = False
                     break
 
-
-        for card in hand:
-            if playable(card, top):
-                if card.color is None:
-                    if hand[0].color is None:
-                        card.color = random.choice(deck.colors)
-                        card.card = (card.value, card.color)
-
-                    else:
-                        card.color = hand[0].color
-                        card.card = (card.value, card.color)
-
-                top = get_top(hand, hand.index(card), deck)
-                choosing = False
-                break
-
-        if choosing:
-            hand.extend(deck.draw(1))
-            running = display_game(players, deck, top, direction)
-            pygame.time.wait(150)
+            if choosing:
+                hand.extend(deck.draw(1))
+                display_game(players, deck, direction)
+                pygame.time.wait(150)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-                break
+                pygame.quit()
+                sys.exit()
 
-    if not running:
-        return (False,) * 8
-
-    direction, players_turn, counter, next_hand = card_effects(top, direction, players_turn,
+    direction, players_turn, counter, next_hand = card_effects( direction, players_turn,
                                                                counter, next_hand, deck)
-    running = display_game(players, deck, top, direction)
-
-    if not running:
-        return (False,) * 8
+    display_game(players, deck, direction)
 
     pygame.time.wait(1200)
 
-    return deck,players,hand,next_hand,direction, players_turn,counter,top
+    return players, next_hand, direction, players_turn, counter
 
 
 
-def player_turn(deck, players, hand, next_hand,
-                direction, players_turn, counter, top):
+def player_turn(deck, players, next_hand,
+                direction, players_turn, counter):
+    """
+    Gère le tour du joueur humain. Affiche le plateau et attend son choix de carte.
+    :return: Tuple - (players, next_hand, direction, players_turn, counter)
+    """
     while True:
+        hand = players[0]
         hand = deck.sort(hand)
+        top = deck.deck[0]
+        put_draw = False
 
-        running, choice = card_choice(players, deck, top, direction)
+        choice = card_choice(players, deck, top, direction)
         if type(choice) is int:
             card = hand[choice]
 
-        if not running:
+        if counter != 0 and hand[choice].value == "Draw":
+            hand = put_on_top(hand, choice, deck)
             break
 
-        if top.value == "Draw" and counter != 0:
-            hand, top, deck, choosing = have_draw(hand, card, top, deck, counter)
+        elif counter == 0:
 
-        elif choice == "Draw":
-            if can_draw(hand, top):
-                hand.extend(deck.draw(1))
+            if choice == "Draw":
+                if can_draw(hand, top):
+                    hand.extend(deck.draw(1))
 
-        elif choice is not None:
-            if card.color is None:
-                running, color = color_choice(card)
+            elif choice is not None:
+                if card.color is None:
+                    color = color_choice(card)
+                    if color:
+                        card.color = color
+                        card.card = (card.value, color)
 
-                card.color = color
-                card.card = (card.value, color)
+                        hand = put_on_top(hand, choice, deck)
+                        break
+                elif playable(card, top):
+                    hand = put_on_top(hand, choice, deck)
+                    break
 
-                top, hand = get_top(hand, choice, deck)
-                break
-
-            elif playable(card, top):
-                top, hand = get_top(hand, choice, deck)
-                break
-
-    if not running:
-        return (False,) * 8
-
-    direction, players_turn, counter, next_hand = card_effects(top, direction, players_turn,
+    direction, players_turn, counter, next_hand = card_effects(direction, players_turn,
                                                                counter, next_hand, deck)
-    running = display_game(players, deck, top, direction)
-
-    if not running:
-        return (False,) * 8
+    display_game(players, deck, direction)
 
     pygame.time.wait(1000)
 
-    return deck,players,hand,next_hand,direction, players_turn,counter,top
+    return players, next_hand, direction, players_turn, counter
 
 def distribute(nbplayers, nbcards, deck):
+    """
+    Distribue les cartes initiales à chaque joueur.
+    :return: List[List[Card]]
+    """
     hands = []
     for i in range(nbplayers):
         hands.append(deck.draw(7))
     return hands
 
 def playable(card, top):
+    """
+    Vérifie si une carte peut être jouée sur la carte au sommet.
+    :return: Boolean
+    """
     if card.color == top.color or card.value == top.value:
         return True
 
@@ -148,14 +149,20 @@ def playable(card, top):
     return False
 
 def choose_first_card(deck):
+    """
+    Choisit la première carte du jeu (évite les jokers et les +2).
+    """
     top = deck.draw(1)[0]
     while top.value in ("joker", "joker4", "Draw"):
-        deck.deck.insert(0, top)
         top = deck.draw(1)[0]
 
-    return top,deck
+    deck.deck.insert(0, top)
+
 
 def joker_reset(deck):
+    """
+    Réinitialise la couleur de tous les jokers du deck à None.
+    """
     for i in range(1, len(deck.deck)):
         card = deck.deck[i]
 
@@ -163,34 +170,41 @@ def joker_reset(deck):
             card.color = None
             card.card = (card.value, None)
 
-    return deck
-
 def can_draw(hand, top):
+    """
+    Vérifie si le joueur n'a aucune carte jouable et doit piocher.
+    :return: Boolean
+    """
     for card in hand:
         if playable(card, top):
             return False
 
     return True
 
-def have_draw(hand, card, top, deck, counter):
-    if card.value == "Draw":
-        counter += 2
-        top = card
+def have_draw(hand):
+    """
+    Vérifie si la main contient au moins une carte "Draw" (+2).
+    :return: Boolean
+    """
+    for card in hand:
+        if card.value == "Draw":
+            return True
+    return False
 
-        hand.pop(hand.index(top))
-        deck.deck.insert(0, top)
+def put_on_top(hand, choice, deck):
+    """
+    Place une carte de la main au sommet du deck et la retire de la main.
+    :return: List[Card]
+    """
+    deck.deck.insert(0, hand.pop(choice))
+    return hand
 
-        return hand,top,deck,False
-
-    return hand,top,deck,True
-
-def get_top(hand, choice, deck):
-    top = hand.pop(choice)
-    deck.deck.insert(0, top)
-    return top
-
-def card_effects(top, direction, players_turn, counter, next_hand, deck):
-
+def card_effects(direction, players_turn, counter, next_hand, deck):
+    """
+    Applique les effets spéciaux de la carte jouée (Turn, Pass, Draw, joker4).
+    :return: Tuple - (direction, players_turn, counter, next_hand)
+    """
+    top = deck.deck[0]
     if top.value == "Turn":
         direction *= -1
 
@@ -199,13 +213,8 @@ def card_effects(top, direction, players_turn, counter, next_hand, deck):
 
     elif top.value == "Draw":
         counter += 2
-        add = False
 
-        for card in next_hand:
-            if card.value == "Draw":
-                add = True
-
-        if not add:
+        if not have_draw(next_hand):
             next_hand.extend(deck.draw(counter))
             players_turn += 1 * direction
             counter = 0
@@ -217,13 +226,3 @@ def card_effects(top, direction, players_turn, counter, next_hand, deck):
     players_turn += 1 * direction
 
     return direction, players_turn, counter, next_hand
-
-# Debug
-"""def show_deck(deck):
-    for i in range(len(deck)):
-        print(deck[i])
-
-def show_card(players):
-    for i in range(len(players)):
-        for j in range(len(players[i])):
-            print(players[i][j])"""

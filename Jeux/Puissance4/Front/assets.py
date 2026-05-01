@@ -1,7 +1,10 @@
 import os
 import pygame
 
-def load_assets(): #->   Surface, Surface, Surface
+def load_assets():
+    """
+    Récupération des images pour afficher dans pygame.
+    """
     BASE = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
 
     pygame.init()

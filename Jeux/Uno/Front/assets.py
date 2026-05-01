@@ -2,6 +2,9 @@ import os
 import pygame
 
 def load_assets():
+    """
+    Récupération des images pour afficher dans pygame.
+    """
     card_format = (100, 150)
     path = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
 

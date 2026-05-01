@@ -2,48 +2,55 @@ from Jeux.Snake.Front.display import *
 from Class.Snake import *
 from Class.Apple import *
 
-def main():
-    snake = Snake()
-    apple = Apple(snake)
-    intro(snake, apple)
-
-    clock = pygame.time.Clock()
-
-    while len(apple.position) < 4:
-        apple.random_position(snake)
-
+fondu()
+while main_menu():
+    """
+    Skip main_menu().
+    """
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        """
+        Initialisation du programme
+        """
+        snake = Snake()
+        apple = Apple(snake)
+        intro(snake, apple)
 
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    snake.turn((0, -1))
-                elif event.key == pygame.K_RIGHT:
-                    snake.turn((0, 1))
-                elif event.key == pygame.K_UP:
-                    snake.turn((-1, 0))
-                elif event.key == pygame.K_DOWN:
-                    snake.turn((1, 0))
+        clock = pygame.time.Clock()
 
-        if not snake.move():
-            restart = game_over(apple.eaten)
-            if restart:
-                return main()
+        while len(apple.position) < 4:
+            apple.random_position(snake)
 
-        if snake.snake[0][1] in apple.position:
-            snake.grow = True
-            apple.remove_from_bag(snake.snake[0][1])
+        while True:
+            """
+            Boucle principale
+            """
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-            if len(snake.snake) + len(apple.position) <= 143:
-                apple.random_position(snake)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        snake.turn((0, -1))
+                    elif event.key == pygame.K_RIGHT:
+                        snake.turn((0, 1))
+                    elif event.key == pygame.K_UP:
+                        snake.turn((-1, 0))
+                    elif event.key == pygame.K_DOWN:
+                        snake.turn((1, 0))
 
-        affichage_snake(snake, apple)
+            if not snake.move():
+                if display_game_over(apple.eaten):
+                    break
 
-        clock.tick(4)
 
-start = main_menu()
-if start:
-    main()
+            if snake.snake[0][1] in apple.position:
+                snake.grow = True
+                apple.remove_from_bag(snake.snake[0][1])
+
+                if len(snake.snake) + len(apple.position) <= 143:
+                    apple.random_position(snake)
+
+            display_all(snake, apple)
+
+            clock.tick(4)

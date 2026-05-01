@@ -20,6 +20,9 @@ class DeckUno:
 
         random.shuffle(self.deck)
 
+    def drop(self):
+        return self.deck.pop()
+
     def draw(self, n):
         drawer = []
         if n <= 0:
@@ -55,8 +58,6 @@ class DeckUno:
                             hand[i + 1], hand[i] = hand[i], hand[i + 1]
                         elif card[0] == "joker4" and card_[0] == "joker":
                             hand[i + 1], hand[i] = hand[i], hand[i + 1]
-
-
         return hand
 
 

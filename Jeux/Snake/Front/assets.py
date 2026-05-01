@@ -1,5 +1,8 @@
 import os
 def load_assets():
+    """
+    Récupération des images pour afficher dans pygame.
+    """
     BASE = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
     import pygame
     pygame.init()

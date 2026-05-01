@@ -1,5 +1,8 @@
 import os
-def load_assets(): #->  list[tuple[tuple[str, str], Surface]] , Surface , dict[tuple[str, str] , Surface
+def load_assets():
+    """
+    Récupération des images pour afficher dans pygame.
+    """
     BASE = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
     TAILLE_CARTE = (100, 150)
     import pygame
