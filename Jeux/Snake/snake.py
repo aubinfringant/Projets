@@ -46,6 +46,7 @@ while Display.main_menu():
             if not snake.move():
                 if display_game_over(apple.eaten):
                     break
+
             elif apple.eaten == 140:
                 display_game_over(apple.eaten)
                 break
