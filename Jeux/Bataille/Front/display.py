@@ -121,4 +121,4 @@ pygame.init()
 pygame.display.set_caption("BATAILLE")
 screen = pygame.display.set_mode((700,700))
 
-deck_png, carte_dos,cards_sprite,tapis = load_assets()
+carte_dos,cards_sprite,tapis = load_assets()
