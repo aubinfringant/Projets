@@ -4,7 +4,7 @@ from Class.Deck52 import *
 from Class.Player import *
 from Class.Trick import *
 
-Display = GameStart("Bataille", (80, 150, 80),(700, 700))
+Display = GameStart("Bataille", (10, 80, 40),(700, 700))
 
 while Display.main_menu():
     """

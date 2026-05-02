@@ -7,7 +7,7 @@ def free_column_verif(column,grid):
 
 def free_row(column,grid):
     """
-    Renvoye la premiere ligne non vide.
+    Renvoye la premiere row non vide.
     :return: Integer
     """
     for j in range(len(grid)):
@@ -22,45 +22,45 @@ def verification(grid):
     """
     if 0 not in grid[0]:
         return True,0
-    #ligne
-    for ligne in range(0, 6):
+    #row
+    for row in range(0, 6):
         for column in range(0, 4):
             a = 0
             b = 0
-            for jeton in range(0, 4):
-                if grid[ligne][column + jeton] == 1:
+            for chips in range(0, 4):
+                if grid[row][column + chips] == 1:
                     a += 1
                     if a == 4:
                         return True, 1
-                elif grid[ligne][column + jeton] == 2:
+                elif grid[row][column + chips] == 2:
                     b += 1
                     if b == 4:
                         return True, 2
     #column
     for column in range(0, 7):
-        for ligne in range(0, 3):
+        for row in range(0, 3):
             a = 0
             b = 0
-            for jeton in range(0, 4):
-                if grid[ligne + jeton][column] == 1:
+            for chips in range(0, 4):
+                if grid[row + chips][column] == 1:
                     a += 1
                     if a == 4:
                         return True, 1
-                elif grid[ligne + jeton][column] == 2:
+                elif grid[row + chips][column] == 2:
                     b += 1
                     if b == 4:
                         return True, 2
     #diagonale haut-gauche/bas-droite
-    for ligne in range(0, 3):
+    for row in range(0, 3):
         for column in range(0, 4):
             a = 0
             b = 0
-            for jeton in range(0, 4):
-                if grid[ligne + jeton][column + jeton] == 1:
+            for chips in range(0, 4):
+                if grid[row + chips][column + chips] == 1:
                     a += 1
                     if a == 4:
                         return True, 1
-                elif grid[ligne + jeton][column + jeton] == 2:
+                elif grid[row + chips][column + chips] == 2:
                     b += 1
                     if b == 4:
                         return True, 2
@@ -68,22 +68,24 @@ def verification(grid):
         for column in range(6, 2, -1):
             a = 0
             b = 0
-            for jeton in range(0, 4):
-                if grid[ligne + jeton][column - jeton] == 1:
+            for chips in range(0, 4):
+                if grid[row + chips][column - chips] == 1:
                     a += 1
                     if a == 4:
                         return True, 1
-                elif grid[ligne + jeton][column - jeton] == 2:
+                elif grid[row + chips][column - chips] == 2:
                     b += 1
                     if b == 4:
                         return True, 2
     return False, 0
 """
 En dessous il y a se que m'a fait l'IA pour créer une IA imbatable.
-Resultat une IA nulle.
+Resultat une IA nulle. Je ne sais pas si c'est ma façon de lui 
+demamder ou si je lui ai donné trop de contrainte comme ne pas 
+toucher à la structure du jeu ¯\_(ツ)_/¯.
 """
-def play(grid, ligne, column, joueur):#IA
-    grid[ligne-1][column] = joueur
+def play(grid, row, column, joueur):#IA
+    grid[row-1][column] = joueur
 
 def bot_choice(grid): #IA
     import math
@@ -109,27 +111,27 @@ def bot_choice(grid): #IA
     def evaluation(grid):
         score = 0
 
-        # lignes
-        for ligne in range(6):
+        # rows
+        for row in range(6):
             for col in range(4):
-                fenetre = [grid[ligne][col+i] for i in range(4)]
+                fenetre = [grid[row][col+i] for i in range(4)]
                 score += score_fenetre(fenetre)
 
         # columns
         for col in range(7):
-            for ligne in range(3):
-                fenetre = [grid[ligne+i][col] for i in range(4)]
+            for row in range(3):
+                fenetre = [grid[row+i][col] for i in range(4)]
                 score += score_fenetre(fenetre)
 
         # diagonales
-        for ligne in range(3):
+        for row in range(3):
             for col in range(4):
-                fenetre = [grid[ligne+i][col+i] for i in range(4)]
+                fenetre = [grid[row+i][col+i] for i in range(4)]
                 score += score_fenetre(fenetre)
 
-        for ligne in range(3):
+        for row in range(3):
             for col in range(3, 7):
-                fenetre = [grid[ligne+i][col-i] for i in range(4)]
+                fenetre = [grid[row+i][col-i] for i in range(4)]
                 score += score_fenetre(fenetre)
 
         return score
@@ -143,12 +145,12 @@ def bot_choice(grid): #IA
         if maximisant:
             max_eval = -math.inf
             for col in coups:
-                ligne = free_row(col, grid)
-                if ligne is None:
+                row = free_row(col, grid)
+                if row is None:
                     continue
 
                 copy = [row[:] for row in grid]
-                play(copy, ligne, col, 2)
+                play(copy, row, col, 2)
 
                 eval = minimax(copy, deep - 1, alpha, beta, False)
                 max_eval = max(max_eval, eval)
@@ -162,12 +164,12 @@ def bot_choice(grid): #IA
         else:
             min_eval = math.inf
             for col in coups:
-                ligne = free_row(col, grid)
-                if ligne is None:
+                row = free_row(col, grid)
+                if row is None:
                     continue
 
                 copy = [row[:] for row in grid]
-                play(copy, ligne, col, 1)
+                play(copy, row, col, 1)
 
                 eval = minimax(copy, deep - 1, alpha, beta, True)
                 min_eval = min(min_eval, eval)
@@ -186,12 +188,12 @@ def bot_choice(grid): #IA
         if not free_column_verif(col, grid):
             continue
 
-        ligne = free_row(col, grid)
-        if ligne is None:
+        row = free_row(col, grid)
+        if row is None:
             continue
 
         copy = [row[:] for row in grid]
-        play(copy, ligne, col, 2)
+        play(copy, row, col, 2)
 
         score = minimax(copy, PROFONDEUR - 1, -math.inf, math.inf, False)
 

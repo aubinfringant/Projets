@@ -2,60 +2,6 @@ from Jeux.Uno.Front.assets import load_assets
 import pygame
 import sys
 
-def main_menu():
-    """
-    Affiche le menu principal avec les options "Nouvelle partie" et "Quitter".
-    Gère les événements souris pour détecter le choix de l'utilisateur.
-    :return: Boolean
-    """
-    font = pygame.font.SysFont("timesnewroman", 70, True, True)
-    title = font.render("Bataille", True, (255, 255, 255))
-    title_ = font.render("Bataille", True, (200, 0, 0))
-
-    font = pygame.font.SysFont("calibri", 50, True)
-
-    while True:
-
-        mouse_cord_x, mouse_cord_y = pygame.mouse.get_pos()
-
-        if 22 < mouse_cord_x < 338 and 180 < mouse_cord_y < 220:
-            new_game_msg = font.render("Nouvelle partie", True, (50, 50, 50))
-        else:
-            new_game_msg = font.render("Nouvelle partie", True, (100, 100, 100))
-
-        if 22 < mouse_cord_x < 161 and 340 < mouse_cord_y < 380:
-            leave_msg = font.render("Quitter", True, (50, 50, 50))
-        else:
-            leave_msg = font.render("Quitter", True, (100, 100, 100))
-
-
-        screen.fill((50, 200, 50))
-        display_main_menu(new_game_msg, leave_msg, title, title_)
-
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button in (1, 3):
-                    if 22 < mouse_cord_x < 338 and 180 < mouse_cord_y < 220:
-                        return True
-
-                    elif 22 < mouse_cord_x < 161 and 340 < mouse_cord_y < 380:
-                        pygame.quit()
-                        sys.exit()
-
-def display_main_menu(new_game_msg = str, leave_msg = str, title = str, title_ = str):
-    """
-    Place les boutons du menu principal et le titre sur l'écran.
-    """
-    screen.blit(new_game_msg, (20, 180))
-    screen.blit(leave_msg, (20, 340))
-    screen.blit(title, (37, 39))
-    screen.blit(title_, (40, 40))
 
 def display_game(players,deck,direction):
     """
@@ -65,7 +11,6 @@ def display_game(players,deck,direction):
     """
     grid = []
     top = deck.deck[0]
-    print(type(top))
     right_arrow = joker[2]
     left_arrow = pygame.transform.rotate(right_arrow, 180)
     factor = get_factor(len(players[0]))
@@ -89,12 +34,12 @@ def display_game(players,deck,direction):
         elif players[0][i].value == "joker4":
             screen.blit(joker[1] ,dest)
         else:
-            screen.blit(dict_cards[players[0][i].card],dest)
+            screen.blit(cards_sprite[players[0][i].card],dest)
 
     display_bot(players)
-    screen.blit(dict_cards[top.card], (250, 275))
+    screen.blit(cards_sprite[top.card], (250, 275))
     screen.blit(card_back, (350, 275))
-
+    clock.tick(60)
     pygame.display.flip()
 
     for event in pygame.event.get():
@@ -148,6 +93,7 @@ def card_choice(players,deck,top,direction):
     grid = display_game(players,deck,direction)
 
     while True:
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -177,12 +123,12 @@ def color_choice(card):
     colors = ["Green", "Blue", "Red", "Yellow"]
 
     for i in range(4):
-        screen.blit(dict_cards[(card.value, colors[i])], (112 + i * 125, 325))
+        screen.blit(cards_sprite[(card.value, colors[i])], (112 + i * 125, 325))
 
     pygame.display.flip()
 
     while True:
-
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -209,6 +155,7 @@ def game_over(winner):
     shadow = font.render("Joueur " + str(winner) + " a gagné !", True, (0, 0, 0))
 
     while True:
+        clock.tick(60)
         screen.blit(shadow, (99, 175))
         screen.blit(msg_game_over,(100, 175))
 
@@ -222,7 +169,8 @@ def game_over(winner):
                 if event.button in (1, 3):
                     return True
 
-card_back,dict_cards,carpet, joker = load_assets()
+card_back, cards_sprite, carpet, joker = load_assets()
 pygame.init()
 screen = pygame.display.set_mode((700,700))
 pygame.display.set_caption("UNO")
+clock = pygame.time.Clock()

@@ -3,12 +3,12 @@ def load_assets():
     """
     Récupération des images pour afficher dans pygame.
     """
-    BASE = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
+    PATH = os.path.join(os.path.dirname(__file__), 'Assets') + os.sep
     import pygame
     pygame.init()
     pygame.display.set_mode((600,800))
-    def img(nom, size=(45,45)):
-        i = pygame.image.load(BASE + nom).convert_alpha()
+    def img(name, size=(45,45)):
+        i = pygame.image.load(PATH + name).convert_alpha()
         return pygame.transform.scale(i, size) if size else i
 
     apple = img('apple.png')

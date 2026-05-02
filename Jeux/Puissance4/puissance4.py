@@ -1,15 +1,18 @@
 from Jeux.Puissance4.Back.engine import *
 from Jeux.Puissance4.Front.display import *
+from Class.GameStart import *
 
+
+Display = GameStart("Puissance 4", (200,200,200),(900, 800))
 fondu()
-while main_menu():
+while Display.main_menu():
     """
     Initialisation du programme
     """
     turn = 1
     grid = [[0] * 7 for _ in range(6)]
 
-    mode = mode()
+    mode = mode_choice()
 
     while True:
         """

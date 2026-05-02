@@ -1,9 +1,11 @@
 from Jeux.Memory.Front.display import *
 from Class.GridMemory import *
+from Class.GameStart import *
 
 
+Display = GameStart("Memory", (10, 80, 40),(700, 700))
 
-while main_menu():
+while Display.main_menu():
     """
     Initialisation du programme
     """
@@ -11,7 +13,7 @@ while main_menu():
     grid = Grid(4,4)
     grid.add_card()
 
-    while not grid.full:
+    while not grid.full():
         """
         Boucle principale
         """

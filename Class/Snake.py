@@ -132,10 +132,11 @@ class Snake:
         delta_x, delta_y = self.direction[0]
         new_head_index = (head_x + delta_x, head_y + delta_y)
         img_idx = self.get_img_idx()
-
         new_head = [self.heads[img_idx], new_head_index]
 
-        for segment in self.snake:
+        for i,segment in enumerate(self.snake):
+            if i == len(self.snake)-1 and not self.grow:
+                continue
             if new_head[1] == segment[1]:
                 return False
 
@@ -156,7 +157,6 @@ class Snake:
             self.snake.pop()
 
         tail_img_idx = self.get_tail_img_idx()
-
         self.snake[-1][0] = self.tails[tail_img_idx][0]
 
         self.old_direction = (delta_x, delta_y)

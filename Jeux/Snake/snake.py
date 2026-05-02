@@ -1,9 +1,12 @@
 from Jeux.Snake.Front.display import *
 from Class.Snake import *
 from Class.Apple import *
+from Class.GameStart import *
 
+
+Display = GameStart("Puissance 4", (200,200,200),(600, 800))
 fondu()
-while main_menu():
+while Display.main_menu():
     """
     Skip main_menu().
     """
@@ -17,13 +20,14 @@ while main_menu():
 
         clock = pygame.time.Clock()
 
-        while len(apple.position) < 4:
+        while len(apple.position) < 140:
             apple.random_position(snake)
 
         while True:
             """
             Boucle principale
             """
+            clock.tick(4)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -42,15 +46,18 @@ while main_menu():
             if not snake.move():
                 if display_game_over(apple.eaten):
                     break
+            elif apple.eaten == 140:
+                display_game_over(apple.eaten)
+                break
 
 
             if snake.snake[0][1] in apple.position:
                 snake.grow = True
                 apple.remove_from_bag(snake.snake[0][1])
 
-                if len(snake.snake) + len(apple.position) <= 143:
+                while len(apple.position) < 4 and apple.eaten <=136:
                     apple.random_position(snake)
+
 
             display_all(snake, apple)
 
-            clock.tick(4)

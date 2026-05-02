@@ -5,11 +5,17 @@ def playing(deck, players, direction, counter, players_turn):
     """
     Boucle principale du jeu. Alterne entre les tours des joueurs et des bots jusqu'à un gagnant.
     """
+    turn = 0
     while True:
         joker_reset(deck)
         players[0] = deck.sort(players[0])
         hand = players[players_turn % 4]
         next_hand = players[(players_turn + 1 * direction) % 4]
+
+        if turn % 60:
+            top = deck.deck.pop(0)
+            deck.shuffle()
+            deck.deck.insert(0, top)
 
         if players_turn % 4 == 0:
             players,next_hand,direction, players_turn,counter = (
@@ -23,6 +29,7 @@ def playing(deck, players, direction, counter, players_turn):
             if len(hand) == 0:
                 if game_over(players.index(hand)+1):
                     return
+        turn += 1
 
 def bot_turn(deck, players, next_hand,
              direction, players_turn, counter):

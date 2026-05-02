@@ -5,8 +5,9 @@ Bienvenue dans ma collection de jeux (Cartes, Minis Jeux et Casino)! Ce `README.
 **Contenu**
 
 **I. Liste des jeux disponibles.  
-II. Instalation et démarage.  
-III. Crédits.**
+II. Instalation et démarage.
+III. Class commune
+IV. Crédits.**
 
 ---
 
@@ -51,17 +52,16 @@ III. Crédits.**
 
 **II. Installation et démarage**
   
-  1. **Matériel nécessaire.**
-  
+1. **Matériel nécessaire**
   * Un ordinateur à jour
   * Une souris ou la pavé tactile (pour interagir avec les jeux)
 
-  2. Installer Python et Pycharm
+2. **Installer Python et Pycharm**
 
   * Python : Télécharge-le sur python.org. Lors de l'installation, coche bien "Add Python to PATH". 
   * PyCharm : Télécharge et installe PyCharm Community Edition (gratuit) sur le site de JetBrains.
 
-  3. Récupérer la liste de jeu.
+3. **Récupérer la liste de jeu**
 
   * Ouvre PyCharm. Sur l'écran d'accueil, clique sur le bouton "Get from VCS".
   * Dans le champ URL, colle le lien de ce dépôt :
@@ -71,7 +71,7 @@ III. Crédits.**
   * Choisis le dossier où tu veux enregistrer le projet sur ton PC et clique sur "Clone".
 
 
-  4. installer Pygame
+4. **installer Pygame**
 
   * Ouvre l'onglet Terminal en bas de PyCharm.
   * Tape la commande suivante et appuie sur Entrée :
@@ -80,24 +80,43 @@ III. Crédits.**
   pip install pygame
   ```
 
-  5. Lancer un jeu
+5. **Lancer un jeu**
 
-  * Dans l'explorateur de fichiers à gauche (onglet Project), fais un clic droit sur le fichier du jeu que tu veux lancer (ex: Puissance4.py).
+  * Dans l'explorateur de fichiers à gauche (onglet Project), fais un clic gauche sur le fichier du jeu que tu veux lancer (ex: Pussiance4 -> puissance4.py).
 
   * Sélectionne en haut le bouton lecture "Run 'NomDuJeu'".
 
 ---
 
-Comment utiliser
+Comment Jouer
 
 1. Choisir un jeu
 2. Lire le readme associé
 3. Comprendre les rêgles
-5. Jouer et s'amuser !
+4. Jouer et s'amuser !
 
 ---
 
-**III. Crédits**
+**III. Class commune**
+
+### `GameStart.py`
+
+Affiche le menu principale.
+
+| Attribut         | Type      | Description                       |
+|------------------|-----------|-----------------------------------|
+| `title`          | `str`     | Titre du jeu                      |
+| `color`          | `tuple`   | Couleur du fond                   |
+| `width`,`height` | `int`     | Largeur et hauteur de l'écran     |
+| `screen`         | `Surface` | Espace d'affichage (width,height) |
+
+| Méthode               | Retour | Description                                           |
+|-----------------------|--------|-------------------------------------------------------|
+| `main_menu()`         | `bool` | Retourne `True` si click sur new_game ou stop le code |
+| `display_main_menu()` | `None` | Place les boutons et titre sur l'écran                |
+
+
+**IV. Crédits**
 
 **FRINGANT Aubin** 
 BTS SIO SLAM 1er année

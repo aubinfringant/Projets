@@ -16,11 +16,11 @@ def display_num_of_card(p1 = str, p2 = str):
 
 def display_table(trick, p1, p2):
     """
-    Placer le tapis et les cartes en bataille.
+    Placer le carpet et les cartes en bataille.
     """
-    screen.blit(tapis, (0, 0))
-    screen.blit(carte_dos, (100, 200))
-    screen.blit(carte_dos, (500, 200))
+    screen.blit(carpet, (0, 0))
+    screen.blit(card_back, (100, 200))
+    screen.blit(card_back, (500, 200))
 
     for i in range(0, len(trick.cards), 2) :
         screen.blit(cards_sprite[trick.cards[i].card], (210, 200 + 25 * i))
@@ -57,6 +57,7 @@ def display_choose(trick,p1,p2):
     card2 = cards_sprite[p1[1].card]
 
     while True:
+        clock.tick(60)
         display_table(trick, p1, p2)
         size_trick = len(trick.cards)
         screen.blit(cards_sprite[p2[0].card], (390, 200 + 25 * (size_trick + 1 // 2)))
@@ -96,6 +97,7 @@ def display_game_over(p1,p2):
     font = pygame.font.SysFont("calibri", 70, True)
 
     while True:
+        clock.tick(60)
 
         msg1 = font.render("GAME OVER", True, (200, 100, 100))
         msg2 = font.render("Joueur 1 GAGNE !", True, (200, 100, 100))
@@ -120,5 +122,5 @@ def display_game_over(p1,p2):
 pygame.init()
 pygame.display.set_caption("BATAILLE")
 screen = pygame.display.set_mode((700,700))
-
-carte_dos,cards_sprite,tapis = load_assets()
+clock = pygame.time.Clock()
+card_back,cards_sprite,carpet = load_assets()

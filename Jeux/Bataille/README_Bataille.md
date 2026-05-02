@@ -52,8 +52,8 @@ bataille.py
     │   └── Trick.py                   # Classe Trick
     └── Jeux/Bataille/
              ├── Front/
-             │   ├── display.py                 # Fonctions d'affichage pygame
-             │   └── assets.py                  # Chargement des ressources graphiques
+             │   ├── assets.py                  # Chargement des ressources graphiques
+             │   └── display.py                 # Fonctions d'affichage pygame
              ├── bataille.py                 # Point d'entrée, boucle principale
 ```
 
@@ -65,12 +65,12 @@ bataille.py
 
 Représente une carte du jeu.
 
-| Attribut / Méthode | Type | Description |
-|--------------------|------|-------------|
-| `card` | `tuple` | Tuple `(valeur, couleur)` ex: `("7", "t")` |
-| `value` | `str` | Valeur string de la carte ex: `"7"` |
-| `color` | `str` | Couleur de la carte ex: `"t"` |
-| `values` | `dict` | Conversion string → int (`"1"` → 14, `"2"` → 2, ...) |
+| Attribut   | Type    | Description                                          |
+|------------|---------|------------------------------------------------------|
+| `card`     | `tuple` | Tuple `(valeur, couleur)` ex: `("7", "t")`           |
+| `value`    | `str`   | Valeur string de la carte ex: `"7"`                  |
+| `color`    | `str`   | Couleur de la carte ex: `"t"`                        |
+| `values`   | `dict`  | Conversion string → int (`"1"` → 14, `"2"` → 2, ...) |
 
 ---
 
@@ -78,12 +78,15 @@ Représente une carte du jeu.
 
 Représente un jeu de 52 cartes.
 
-| Attribut / Méthode | Type | Description |
-|--------------------|------|-------------|
-| `deck` | `list[Card]` | Liste de toutes les cartes |
-| `new_deck()` | `None` | Génère les 52 cartes (4 couleurs × 13 valeurs) |
+| Attribut               | Type         | Description                                        |
+|------------------------|--------------|----------------------------------------------------|
+| `deck`                 | `list[Card]` | Liste de toutes les cartes                         |
+
+| Méthode                | Retour | Description                                        |
+|------------------------|--------|----------------------------------------------------|
+| `new_deck()`           | `None` | Génère les 52 cartes (4 couleurs × 13 valeurs)     |
 | `draw(player, number)` | `None` | Distribue `number` cartes vers la main d'un joueur |
-| `shuffle()` | `None` | Mélange le deck |
+| `shuffle()`            | `None` | Mélange le deck                                    |
 
 ---
 
@@ -91,11 +94,14 @@ Représente un jeu de 52 cartes.
 
 Représente un joueur (humain ou ordinateur).
 
-| Attribut / Méthode | Type | Description |
-|--------------------|------|-------------|
-| `name` | `str` | Nom du joueur |
-| `hand` | `list[Card]` | Main du joueur |
-| `drop()` | `Card` | Retire et retourne la première carte de la main (`pop(0)`) |
+| Attribut | Type         | Description                                                |
+|----------|--------------|------------------------------------------------------------|
+| `name`   | `str`        | Nom du joueur                                              |
+
+| Méthode  | Retour       | Description                                                |
+|----------|--------------|------------------------------------------------------------|
+| `hand`   | `list[Card]` | Main du joueur                                             |
+| `drop()` | `Card`       | Retire et retourne la première carte de la main (`pop(0)`) |
 
 ---
 
@@ -103,30 +109,33 @@ Représente un joueur (humain ou ordinateur).
 
 Représente le pli en cours (les cartes posées sur la table).
 
-| Attribut / Méthode | Type | Description |
-|--------------------|------|-------------|
-| `cards` | `list[Card]` | Cartes posées dans l'ordre `p1, p2, p1, p2...` |
-| `result(p1, p2)` | `bool` | Détermine le gagnant du pli |
+| Attribut | Type         | Description                                    |
+|----------|--------------|------------------------------------------------|
+| `cards`  | `list[Card]` | Cartes posées dans l'ordre `p1, p2, p1, p2...` |
+
+| Méthode          | Retour | Description                                    |
+|------------------|--------|------------------------------------------------|
+| `result(p1, p2)` | `bool` | Détermine le gagnant du pli                    |
 
 **Logique de `result(p1, p2)`** :
 
-| Situation | Résultat                                                        |
-|-----------|-----------------------------------------------------------------|
-| `p1 > p2` | p1 remporte toutes les cartes du pli (mélangées) → `False`      |
-| `p1 < p2` | p2 remporte toutes les cartes du pli (mélangées) → `False`      |
-| `p1 == p2` + assez de cartes | Bataille : chaque joueur pose une carte supplémentaire → `True` |
+| Situation                        | Résultat                                                        |
+|----------------------------------|-----------------------------------------------------------------|
+| `p1 > p2`                        | p1 remporte toutes les cartes du pli (mélangées) → `False`      |
+| `p1 < p2`                        | p2 remporte toutes les cartes du pli (mélangées) → `False`      |
+| `p1 == p2` + assez de cartes     | Bataille : chaque joueur pose une carte supplémentaire → `True` |
 | `p1 == p2` + pas assez de cartes | Redistribution équitable → `False`                              |
 
 ---
 
 ## Fonctions d'affichage / selection : `display.py`
 
-| Fonction | Retour | Description |
-|----------|--------|-------------|
-| `display_num_of_card(p1, p2)` | `None` | Affiche le nombre de cartes restantes pour chaque joueur |
-| `display_table(trick, p1, p2)` | `None` | Affiche le plateau avec le tapis, les cartes en jeu et les mains |
+| Fonction                        | Retour | Description                                                                            |
+|---------------------------------|--------|----------------------------------------------------------------------------------------|
+| `display_num_of_card(p1, p2)`   | `None` | Affiche le nombre de cartes restantes pour chaque joueur                               |
+| `display_table(trick, p1, p2)`  | `None` | Affiche le plateau avec le tapis, les cartes en jeu et les mains                       |
 | `display_choose(trick, p1, p2)` | `int`  | Affiche les 2 prochaines cartes du joueur et attend un clic. `0` ou `1` selon le choix |
-| `display_game_over(p1, p2)` | `bool` | Affiche l'écran de fin. `True` = rejouer, `False` = quitter |
+| `display_game_over(p1, p2)`     | `bool` | Affiche l'écran de fin. `True` = rejouer, `False` = quitter                            |
 
 ---
 
@@ -159,10 +168,10 @@ main_menu()
 
 Charge toutes les ressources graphiques depuis le dossier `Assets/` :
 
-| Variable retournée | Description |
-|--------------------|-------------|
-| `deck_png`         | Liste de tuples `((valeur, couleur), image)` |
-| `card_back`        | Image du dos de carte |
+| Variable retournée | Description                                     |
+|--------------------|-------------------------------------------------|
+| `deck_png`         | Liste de tuples `((valeur, couleur), image)`    |
+| `card_back`        | Image du dos de carte                           |
 | `cards_sprite`     | Dictionnaire `(valeur, couleur)` → image pygame |
-| `carpet`           | Image de fond du tapis de jeu |
+| `carpet`           | Image de fond du tapis de jeu                   |
 

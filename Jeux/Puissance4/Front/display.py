@@ -2,57 +2,14 @@ from Jeux.Puissance4.Front.assets import *
 import pygame
 import sys
 
-def main_menu():
-    """
-        Gére l'affichage du menu principale et du choix fait dedans
-        :return: Boolean
-        """
-    font = pygame.font.SysFont("timesnewroman", 70, True, True)
-    title = font.render("PUISSANCE 4", True, (255, 255, 255))
-    title_ = font.render("PUISSANCE 4", True, (200, 0, 0))
 
-    font = pygame.font.SysFont("calibri", 50, True)
-
-    while True:
-
-        mouse_cord_x, mouse_cord_y = pygame.mouse.get_pos()
-
-        if 22 < mouse_cord_x < 338 and 180 < mouse_cord_y < 220:
-            new_game_msg = font.render("Nouvelle partie", True, (50, 50, 50))
-        else:
-            new_game_msg = font.render("Nouvelle partie", True, (100, 100, 100))
-
-        if 22 < mouse_cord_x < 161 and 340 < mouse_cord_y < 380:
-            leave = font.render("Quitter", True, (50, 50, 50))
-        else:
-            leave = font.render("Quitter", True, (100, 100, 100))
-
-        screen.fill((200, 200, 200))
-        display_main_menu(title, title_, new_game_msg, leave)
-
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button in (1, 3):
-                    if 22 < mouse_cord_x < 338 and 180 < mouse_cord_y < 220:
-                        return True
-
-                    elif 22 < mouse_cord_x < 161 and 340 < mouse_cord_y < 380:
-                        pygame.quit()
-                        sys.exit()
-
-def mode():
+def mode_choice():
     """
     Gere la selection du mode (1 ou 2 joueurs).
     :return: Integer
     """
     while True:
-
+        clock.tick(60)
         mouse_cord_x, mouse_cord_y = pygame.mouse.get_pos()
 
         if 150 < mouse_cord_x < 350 and 300 < mouse_cord_y < 340:
@@ -65,7 +22,7 @@ def mode():
             player_2 = font.render("2 PLAYER", True, (100, 100, 100))
 
         screen.fill((200, 200, 200))
-        affichage_menu(player_1, player_2)
+        display_menu(player_1, player_2)
 
         pygame.display.flip()
 
@@ -96,7 +53,7 @@ def choice(grid,turn):
         if 60 < mouse_cord_y < 750:
 
             for i in range(len(columns)):
-                if columns[i] - 4 < mouse_cord_x < columns[i] + 96:
+                if columns[i] - 4 <= mouse_cord_x < columns[i] + 96:
 
                     if turn == 1:
                         screen.blit(chips[0], (columns[i], 54))
@@ -114,7 +71,7 @@ def choice(grid,turn):
                 if event.button in (1, 3):
 
                     for i in range(len(columns)):
-                        if columns[i] - 4 < mouse_cord_x < columns[i] + 96:
+                        if columns[i] - 4 <= mouse_cord_x < columns[i] + 96:
                             return i
 
 def game_over(winner,grid):
@@ -141,6 +98,7 @@ def game_over(winner,grid):
     pygame.display.flip()
 
     while True:
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -153,11 +111,11 @@ def drop(color, col, grid, free_rows):
     """
     Petite animation de chute du jeton.
     """
-    y = 57
+    y = 54
     for i in range(free_rows):
-        for j in range(34):
+        for j in range(10):
 
-            y += 3
+            y += 10
 
             screen.fill((200, 200, 200))
             screen.blit(chips[color-1], (columns[col], y))
@@ -168,8 +126,6 @@ def drop(color, col, grid, free_rows):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
-            pygame.time.wait(4)
 
 def display_chips(grid):
     """
@@ -183,19 +139,11 @@ def display_chips(grid):
             elif grid[i][j] == 2:
                 screen.blit(chips[1],(columns[j], rows[i]))
 
-    screen.blit(grid, (100, 150))
+    screen.blit(grid_img, (100, 150))
+    clock.tick(60)
     pygame.display.flip()
 
-def display_main_menu(title,title_,new_game_msg,leave):
-    """
-    Place les eléments sur l'écran.
-    """
-    screen.blit(title, (17, 19))
-    screen.blit(title_, (20, 20))
-    screen.blit(new_game_msg, (20, 180))
-    screen.blit(leave, (20, 340))
-
-def affichage_menu(p1,p2):
+def display_menu(p1,p2):
     """
     Place les eléments sur l'écran.
     """
@@ -217,8 +165,9 @@ def fondu():
 
 columns = [105 + 100 * i for i in range(7)]
 rows = [154 + 100 * i for i in range(6)]
-chips,grid = load_assets()
+chips,grid_img = load_assets()
 pygame.init()
 screen = pygame.display.set_mode((900,800))
-pygame.display.set_caption('Puissance 4')
+pygame.display.set_caption('PUISSANCE 4')
 font = pygame.font.SysFont("calibri", 50, True)
+clock = pygame.time.Clock()

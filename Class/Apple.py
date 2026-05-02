@@ -15,16 +15,14 @@ class Apple:
         Ajoute automatiquement la pomme à la position trouvée.
         """
         while True:
-            skip = False
             position = (random.randrange(12), random.randrange(12))
 
             for k in range(len(snake.snake)):
                 if position == snake.snake[k][1]:
-                    skip = True
-
-
-            if not skip and position not in self.position:
+                    return
+            if position not in self.position:
                 self.add_to_bag(position)
+                return
 
     def add_to_bag(self, position):
         """

@@ -18,6 +18,9 @@ class DeckUno:
             self.deck.append(Card("joker"))
             self.deck.append(Card("joker4"))
 
+        self.shuffle()
+
+    def shuffle(self):
         random.shuffle(self.deck)
 
     def draw(self, n):

@@ -1,8 +1,11 @@
 from Class.DeckUno import *
 from Jeux.Uno.Back.engine import *
+from Class.GameStart import *
 
 
-while main_menu():
+Display = GameStart("Uno", (10, 80, 40),(700, 700))
+
+while Display.main_menu():
     """
     Initialisation du jeu.
     """
