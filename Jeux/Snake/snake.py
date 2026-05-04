@@ -20,7 +20,7 @@ while Display.main_menu():
 
         clock = pygame.time.Clock()
 
-        while len(apple.position) < 140:
+        while len(apple.position) <= 4:
             apple.random_position(snake)
 
         while True:
