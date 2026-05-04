@@ -7,9 +7,6 @@ from Class.GameStart import *
 Display = GameStart("Puissance 4", (200,200,200),(600, 800))
 fondu()
 while Display.main_menu():
-    """
-    Skip main_menu().
-    """
     while True:
         """
         Initialisation du programme
