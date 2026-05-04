@@ -1,4 +1,4 @@
-Bienvenue dans ma collection de jeux (Cartes, Minis Jeux et Casino)! Ce `README.md` resume les rêgles des différents jeux, leur fonctionnement et comment les lancer.
+Bienvenue dans ma collection de jeux (Cartes, Minis Jeux)! Ce `README.md` resume les rêgles des différents jeux et comment les lancer.
 
 ---
 
