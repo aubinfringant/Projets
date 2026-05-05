@@ -4,7 +4,7 @@ from Class.Apple import *
 from Class.GameStart import *
 
 
-Display = GameStart("Puissance 4", (200,200,200),(600, 800))
+Display = GameStart("Snake", (200,200,200),(600, 800))
 fondu()
 while Display.main_menu():
     while True:
@@ -17,7 +17,7 @@ while Display.main_menu():
 
         clock = pygame.time.Clock()
 
-        while len(apple.position) <= 4:
+        while len(apple.position) <= 139:
             apple.random_position(snake)
 
         while True:
