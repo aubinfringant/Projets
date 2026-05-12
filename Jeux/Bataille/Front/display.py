@@ -16,7 +16,7 @@ def display_num_of_card(p1 = str, p2 = str):
 
 def display_table(trick, p1, p2):
     """
-    Placer le carpet et les cartes en bataille.
+    Placer le tapis et les cartes en bataille.
     """
     screen.blit(carpet, (0, 0))
     screen.blit(card_back, (100, 200))
@@ -30,7 +30,7 @@ def display_table(trick, p1, p2):
 
 def player_turn(trick, p1, p2):
     """
-    Swap les 2 cartes en fonction de la carte choisie
+    Echange les 2 cartes en fonction de la carte choisie
     pour pouvoir donner la bonne avec .drop()
     ou donne la derniere carte si une carte restante.
     """
