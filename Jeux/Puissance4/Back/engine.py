@@ -82,7 +82,7 @@ def verification(grid):
 En dessous il y a se que m'a fait l'IA pour créer une IA imbatable.
 Resultat une IA nulle. Je ne sais pas si c'est ma façon de lui 
 demamder ou si je lui ai donné trop de contrainte comme ne pas 
-toucher à la structure du jeu ¯\_(ツ)_/¯.
+toucher à la structure du jeu ¯\\_(ツ)_/¯.
 """
 def play(grid, row, column, joueur):#IA
     grid[row-1][column] = joueur
